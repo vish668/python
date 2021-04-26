@@ -1,0 +1,60 @@
+#This code is used to generate the test data for simulation of transactions of the bending machines
+
+import json
+import random
+import string
+import decimal
+from datetime import datetime
+
+
+#This number will be adjusted to adjust the number of transactions that need to be created in the test data.
+numOftransactions = 2
+
+#This is the output file where the data will be generated.
+outputFilePath = 'c:\\python_work\\data.txt'
+
+data = {}
+data['transaction'] = []
+
+
+
+for x in range(numOftransactions):
+    
+    #The following code will generate the 10 letter random words as priductnames
+    letters = string.ascii_lowercase
+    prod_name = ''.join(random.choice(letters) for i in range(10)) 
+    
+    # The productid is a random number between 1 and 1000
+    productid = str(random.randint(1,1000))
+    
+    #The following code generates a random price in decimal
+    price = str(float(decimal.Decimal(random.randrange(155, 389))/100))
+    
+    #The timestamp of the transaction
+    timestamp = str(datetime.now(tz=None))
+    
+    #The status is success
+    status = 'Success'
+    error = 'NA'
+
+    #The customerid belongs to the owner company of the vending machine
+    customerid = 1
+    
+#The following code will append the transaction data to JSON
+
+    data['transaction'].append({
+    'prod_name': prod_name,
+    'productid': productid,
+    'price': price,
+    'status': status,
+    'customerid': customerid,
+    'timestamp:': timestamp
+    
+    })
+#The following code will write the JSON Test data file
+
+with open(outputFilePath, 'w') as outfile:
+	    json.dump(data, outfile, indent=4)
+
+print('Success: ' + str(numOftransactions) + ' transactions written.')
+    
